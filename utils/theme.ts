@@ -9,6 +9,11 @@ const colors = {
   },
 };
 
+const fonts = {
+  heading: `'Inter', sans-serif`,
+  body: `'Inter', sans-serif`,
+};
+
 const fontSizes = {
   xs: "0.75rem",
   sm: "0.875rem",
@@ -79,4 +84,5 @@ export const theme = extendTheme({
   lineHeights,
   letterSpacings,
   breakpoints,
+  fonts,
 });
