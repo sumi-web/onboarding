@@ -1,8 +1,20 @@
 import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
 import React from "react";
+import { UserInfo } from "../../pages";
 import CustomInput from "../CustomInput";
 
-const Form1 = () => {
+interface Props {
+  data: UserInfo;
+  onChangeFullNameChange(v: string): void;
+  onUserNameChange(v: string): void;
+  onUserInfoFormSubmit(v: string): void;
+}
+
+const UserInfo = ({
+  data,
+  onChangeFullNameChange,
+  onUserNameChange,
+}: Props) => {
   return (
     <>
       <Box mb={"10"}>
@@ -46,4 +58,4 @@ const Form1 = () => {
   );
 };
 
-export default Form1;
+export default UserInfo;
