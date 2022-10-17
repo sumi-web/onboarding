@@ -21,3 +21,35 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* .stepper {
+  position: relative;
+  margin-bottom: 60px;
+} */
+
+/* .stepper::before {
+  content: "";
+  height: 2px;
+  width: 100%;
+  background-color: #664de5;
+  background: linear-gradient(to right, red 5%, black 95%);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -1;
+} */
+
+.circle::before {
+  content: "";
+  height: 2px;
+  width: 100%;
+  background-color: #eaeef5;
+  position: absolute;
+  /* left: 0; */
+  right: 0;
+  z-index: -1;
+}
+
+.circle.active::before {
+  background-color: #664de5;
+}
