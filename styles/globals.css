@@ -22,10 +22,10 @@ a {
   box-sizing: border-box;
 }
 
-/* .stepper {
-  position: relative;
+.stepper {
+  /* position: relative; */
   margin-bottom: 60px;
-} */
+}
 
 /* .stepper::before {
   content: "";

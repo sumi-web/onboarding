@@ -7,18 +7,19 @@ interface Props {
   data: UserInfo;
   onChangeFullNameChange(v: string): void;
   onUserNameChange(v: string): void;
-  onUserInfoFormSubmit(v: string): void;
+  onSubmit(): void;
 }
 
 const UserInfo = ({
   data,
   onChangeFullNameChange,
   onUserNameChange,
+  onSubmit,
 }: Props) => {
   return (
     <>
       <Box mb={"10"}>
-        <Heading fontSize={"3xl"} lineHeight={"taller"}>
+        <Heading fontSize={"2xl"} lineHeight={"taller"}>
           Welcome! First things first...
         </Heading>
         <Text
@@ -33,23 +34,33 @@ const UserInfo = ({
 
       <Stack maxW={"350px"} width="100%" spacing={4}>
         <CustomInput
+          value={data.fullName}
           labelText="Full Name"
           placeholder="Steve Jobs"
           inputName="fullName"
           type="text"
+          onChange={(e) => {
+            onChangeFullNameChange(e.target.value);
+          }}
         />
         <CustomInput
+          value={data.userName}
           labelText="Display Name"
           placeholder="Steve"
           inputName="userName"
           type="text"
+          onChange={(e) => {
+            onUserNameChange(e.target.value);
+          }}
         />
         <Button
           bg={"main"}
           color="white"
           size="md"
+          fontSize={"xs"}
           _hover={{ bg: "#5438e2" }}
           _active={{ bg: "#5438e2", transform: "scale(0.98)" }}
+          onClick={onSubmit}
         >
           Next
         </Button>

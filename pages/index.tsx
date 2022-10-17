@@ -1,7 +1,7 @@
 import { Flex, Heading } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import OnboardingLayout from "../components/OnboardingLayout";
-import Form1 from "../components/Onboarding/UserInfo";
+import UserInfo from "../components/Onboarding/UserInfo";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import Stepper from "../components/Stepper";
@@ -14,12 +14,25 @@ export interface UserInfo {
   fullName: string;
 }
 
+export interface UserWorkspace {
+  workspaceName: string;
+  url: string;
+}
+
 const Home: NextPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     userName: "",
     fullName: "",
   });
-  const [currentStep, setCurrentStep] = useState(3);
+
+  const [userWorkspace, setUserWorkspace] = useState({
+    workspaceName: "",
+    url: "",
+  });
+
+  const [currentStep, setCurrentStep] = useState(0);
+
+  console.log("check value", userInfo);
 
   const [steps, setSteps] = useState([
     {
@@ -44,7 +57,22 @@ const Home: NextPage = () => {
     setUserInfo((prev) => ({ ...prev, userName: value }));
   }, []);
 
-  const handleUserInfoFormSubmit = useCallback(() => {}, []);
+  const handleWorkspaceChange = useCallback((value: string) => {
+    setUserWorkspace((prev) => ({ ...prev, workspaceName: value }));
+  }, []);
+
+  const handleUrlChange = useCallback((value: string) => {
+    setUserWorkspace((prev) => ({ ...prev, url: value }));
+  }, []);
+
+  const handleWorkspaceSubmit = useCallback(() => {
+    setCurrentStep((prev) => prev + 1);
+  }, []);
+
+  const handleUserInfoFormSubmit = useCallback(() => {
+    console.log("handle final submit");
+    setCurrentStep((prev) => prev + 1);
+  }, []);
 
   const checkForErrorsInForm1 = () => {};
 
@@ -58,14 +86,19 @@ const Home: NextPage = () => {
         {/* show steps here */}
         <Stepper currentStep={currentStep} steps={steps} />
         {currentStep === 0 ? (
-          <Form1
+          <UserInfo
             data={userInfo}
             onChangeFullNameChange={handleFullNameChange}
             onUserNameChange={handleUserNameChange}
-            onUserInfoFormSubmit={handleUserInfoFormSubmit}
+            onSubmit={handleUserInfoFormSubmit}
           />
         ) : currentStep === 1 ? (
-          <UserWorkspace />
+          <UserWorkspace
+            data={userWorkspace}
+            onWorkSpaceChange={handleWorkspaceChange}
+            onUrlChange={handleUrlChange}
+            onSubmit={handleWorkspaceSubmit}
+          />
         ) : currentStep === 2 ? (
           <EdenFor />
         ) : (
