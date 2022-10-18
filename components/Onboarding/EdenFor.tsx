@@ -5,9 +5,14 @@ import { EdenForType } from "../../pages";
 interface Props {
   selectWorkspaceFor: EdenForType;
   onWorkspaceForChange(v: EdenForType): void;
+  onSubmit(): void;
 }
 
-const EdenFor = ({ selectWorkspaceFor, onWorkspaceForChange }: Props) => {
+const EdenFor = ({
+  selectWorkspaceFor,
+  onWorkspaceForChange,
+  onSubmit,
+}: Props) => {
   return (
     <>
       <Box mb={"10"}>
@@ -82,7 +87,7 @@ const EdenFor = ({ selectWorkspaceFor, onWorkspaceForChange }: Props) => {
           fontSize={"xs"}
           _hover={{ bg: "#5438e2" }}
           _active={{ bg: "#5438e2", transform: "scale(0.98)" }}
-          onClick={() => {}}
+          onClick={onSubmit}
         >
           Next
         </Button>

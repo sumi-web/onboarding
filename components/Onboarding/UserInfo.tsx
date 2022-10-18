@@ -5,6 +5,7 @@ import CustomInput from "../CustomInput";
 
 interface Props {
   data: UserInfo;
+  errors: Partial<UserInfo>;
   onChangeFullNameChange(v: string): void;
   onUserNameChange(v: string): void;
   onSubmit(): void;
@@ -12,6 +13,7 @@ interface Props {
 
 const UserInfo = ({
   data,
+  errors,
   onChangeFullNameChange,
   onUserNameChange,
   onSubmit,
@@ -35,6 +37,7 @@ const UserInfo = ({
       <Stack maxW={"350px"} width="100%" spacing={5}>
         <CustomInput
           value={data.fullName}
+          error={errors?.fullName}
           labelText="Full Name"
           placeholder="Steve Jobs"
           inputName="fullName"
@@ -45,6 +48,7 @@ const UserInfo = ({
         />
         <CustomInput
           value={data.userName}
+          error={errors?.userName}
           labelText="Display Name"
           placeholder="Steve"
           inputName="userName"

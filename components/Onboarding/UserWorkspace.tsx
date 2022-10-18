@@ -1,49 +1,31 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Input, InputGroup, InputLeftAddon, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { UserWorkspace } from "../../pages";
 import CustomInput from "../CustomInput";
 
 interface Props {
   data: UserWorkspace;
+  errors: Partial<UserWorkspace>;
   onWorkSpaceChange(v: string): void;
   onUrlChange(v: string): void;
   onSubmit(): void;
 }
 
-const UserWorkspace = ({
-  data,
-  onWorkSpaceChange,
-  onUrlChange,
-  onSubmit,
-}: Props) => {
+const UserWorkspace = ({ data, errors, onWorkSpaceChange, onUrlChange, onSubmit }: Props) => {
   return (
     <>
       <Box mb={"10"}>
         <Heading fontSize={"2xl"} lineHeight={"taller"}>
           Let&apos;s set up a home for all your work
         </Heading>
-        <Text
-          fontSize="sm"
-          color={"gray.500"}
-          fontWeight="bold"
-          textAlign={"center"}
-        >
+        <Text fontSize="sm" color={"gray.500"} fontWeight="bold" textAlign={"center"}>
           You can always create another workspace later.
         </Text>
       </Box>
       <Stack maxW={"350px"} width="100%" spacing={4}>
         <CustomInput
           labelText="Workspace Name"
+          error={errors?.workspaceName}
           placeholder="Eden"
           value={data.workspaceName}
           inputName="fullName"
@@ -53,13 +35,7 @@ const UserWorkspace = ({
           }}
         />
         <Flex direction={"column"}>
-          <Text
-            m={0}
-            color={"gray.700"}
-            fontWeight="medium"
-            fontSize={"sm"}
-            mb="6px"
-          >
+          <Text m={0} color={"gray.700"} fontWeight="medium" fontSize={"sm"} mb="6px">
             {"Workspace URL (optional)"}
           </Text>
           <InputGroup>
@@ -80,6 +56,11 @@ const UserWorkspace = ({
               }}
             />
           </InputGroup>
+          {errors?.url && (
+            <Text fontSize={"xs"} color="red">
+              {errors?.url}
+            </Text>
+          )}
         </Flex>
         <Button
           bg={"main"}

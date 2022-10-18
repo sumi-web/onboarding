@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Text } from "@chakra-ui/react";
+import { Flex, FormErrorMessage, Input, Text } from "@chakra-ui/react";
 
 interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
   labelText?: string;
@@ -35,7 +35,11 @@ const CustomInput = ({
         }}
         {...rest}
       />
-      {error && <Text />}
+      {error && (
+        <Text fontSize={"xs"} color="red">
+          {error}
+        </Text>
+      )}
     </Flex>
   );
 };

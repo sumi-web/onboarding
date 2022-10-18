@@ -27,17 +27,20 @@ const Home: NextPage = () => {
     fullName: "",
   });
 
-  const [userWorkspace, setUserWorkspace] = useState({
+  const [userInfoErrors, setUserInfoErrors] = useState<Partial<UserInfo>>({});
+
+  const [userWorkspace, setUserWorkspace] = useState<UserWorkspace>({
     workspaceName: "",
     url: "",
   });
 
-  const [selectWorkspaceFor, setSelectedWorkspaceFor] =
-    useState<EdenForType>("me");
+  const [userWorkspaceErrors, setUserWorkspaceErrors] = useState<Partial<UserWorkspace>>({});
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [selectWorkspaceFor, setSelectedWorkspaceFor] = useState<EdenForType>("me");
 
-  console.log("check value", userInfo);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  console.log("check value", userInfoErrors);
 
   const [steps, setSteps] = useState([
     {
@@ -55,51 +58,152 @@ const Home: NextPage = () => {
   ]);
 
   // helper functions for userInfo
-  const handleFullNameChange = useCallback((value: string) => {
-    setUserInfo((prev) => ({ ...prev, fullName: value }));
-  }, []);
+  const handleFullNameChange = useCallback(
+    (value: string) => {
+      setUserInfo((prev) => ({ ...prev, fullName: value }));
+      if (value) {
+        if ("fullName" in userInfoErrors) {
+          const errors = { ...userInfoErrors };
+          delete errors.fullName;
+          setUserInfoErrors(errors);
+        }
+      }
+    },
+    [userInfoErrors]
+  );
 
-  const handleUserNameChange = useCallback((value: string) => {
-    setUserInfo((prev) => ({ ...prev, userName: value }));
-  }, []);
+  const handleUserNameChange = useCallback(
+    (value: string) => {
+      setUserInfo((prev) => ({ ...prev, userName: value }));
+      if (value) {
+        if ("userName" in userInfoErrors) {
+          const errors = { ...userInfoErrors };
+          delete errors.userName;
+          setUserInfoErrors(errors);
+        }
+      }
+    },
+    [userInfoErrors]
+  );
 
   const handleUserInfoFormSubmit = useCallback(() => {
-    console.log("handle final submit");
-    setCurrentStep((prev) => prev + 1);
-  }, []);
+    const errors = checkForErrorsInForm1();
+
+    if (Object.keys(errors).length === 0) {
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      setUserInfoErrors(errors);
+    }
+  }, [userInfo]);
 
   // helper functions for userInfo
   const handleWorkspaceChange = useCallback((value: string) => {
     setUserWorkspace((prev) => ({ ...prev, workspaceName: value }));
+    if (value) {
+      if ("workspaceName" in userWorkspaceErrors) {
+        const errors = { ...userWorkspaceErrors };
+        delete errors.workspaceName;
+        setUserWorkspaceErrors(errors);
+      }
+    }
   }, []);
 
   const handleUrlChange = useCallback((value: string) => {
     setUserWorkspace((prev) => ({ ...prev, url: value }));
+    if (value) {
+      if ("url" in userWorkspaceErrors) {
+        const errors = { ...userWorkspaceErrors };
+        delete errors.url;
+        setUserWorkspaceErrors(errors);
+      }
+    }
   }, []);
 
   const handleWorkspaceSubmit = useCallback(() => {
-    setCurrentStep((prev) => prev + 1);
-  }, []);
+    const errors = checkForErrorsInForm2();
+
+    if (Object.keys(errors).length === 0) {
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      setUserWorkspaceErrors(errors);
+    }
+  }, [userWorkspace]);
 
   // helper functions for eden for
   const handleWorkspaceForChange = useCallback((value: EdenForType) => {
     setSelectedWorkspaceFor(value);
   }, []);
 
-  const checkForErrorsInForm1 = () => {};
+  const handleWorkspaceForSubmit = useCallback(() => {
+    setCurrentStep((prev) => prev + 1);
+  }, []);
+
+  // helper functions for final screen
+  const launchEden = () => {
+    setCurrentStep(0);
+    setUserInfo({ fullName: "", userName: "" });
+    setUserWorkspace({
+      workspaceName: "",
+      url: "",
+    });
+  };
+
+  const checkForErrorsInForm1 = () => {
+    const errors = { ...userInfoErrors };
+
+    if (!userInfo.fullName.trim()) {
+      errors.fullName = "Full name is required";
+    } else if (userInfo.fullName.trim().length < 3) {
+      errors.fullName = "Full name should be more than 2 characters";
+    } else {
+      delete errors.fullName;
+    }
+
+    if (!userInfo.userName?.trim()) {
+      errors.userName = "username is required";
+    } else if (userInfo.userName.trim().length < 3) {
+      errors.userName = "username should be more than 2 characters";
+    } else {
+      delete errors.userName;
+    }
+
+    return errors;
+  };
+
+  const checkForErrorsInForm2 = () => {
+    const errors = { ...userWorkspaceErrors };
+
+    if (!userWorkspace.workspaceName.trim()) {
+      errors.workspaceName = "workspace name is required";
+    } else if (userWorkspace.workspaceName.trim().length < 3) {
+      errors.workspaceName = "workspace name should be more than 2 characters";
+    } else {
+      delete errors.workspaceName;
+    }
+
+    if (!userWorkspace.url?.trim()) {
+      errors.url = "workspace URL is required";
+    } else if (userWorkspace.url.trim().length < 3) {
+      errors.url = "workspace URL should be more than 2 characters";
+    } else {
+      delete errors.url;
+    }
+
+    return errors;
+  };
 
   return (
     <OnboardingLayout>
       <>
         <Flex align={"flex-end"} gap="8px" mb={"60px"}>
-          <Image src="/images/logo.svg" alt="" height={40} width={40} />{" "}
-          <Heading fontSize={"2xl"}>Eden</Heading>
+          <Image src="/images/logo.svg" alt="" height={40} width={40} /> <Heading fontSize={"2xl"}>Eden</Heading>
         </Flex>
         {/* show steps here */}
         <Stepper currentStep={currentStep} steps={steps} />
         {currentStep === 0 ? (
           <UserInfo
             data={userInfo}
+            errors={userInfoErrors}
             onChangeFullNameChange={handleFullNameChange}
             onUserNameChange={handleUserNameChange}
             onSubmit={handleUserInfoFormSubmit}
@@ -107,17 +211,15 @@ const Home: NextPage = () => {
         ) : currentStep === 1 ? (
           <UserWorkspace
             data={userWorkspace}
+            errors={userWorkspaceErrors}
             onWorkSpaceChange={handleWorkspaceChange}
             onUrlChange={handleUrlChange}
             onSubmit={handleWorkspaceSubmit}
           />
         ) : currentStep === 2 ? (
-          <EdenFor
-            selectWorkspaceFor={selectWorkspaceFor}
-            onWorkspaceForChange={handleWorkspaceForChange}
-          />
+          <EdenFor selectWorkspaceFor={selectWorkspaceFor} onWorkspaceForChange={handleWorkspaceForChange} onSubmit={handleWorkspaceForSubmit} />
         ) : (
-          currentStep === 3 && <FinalOnboarding />
+          currentStep === 3 && <FinalOnboarding userName={userInfo.userName} launchEden={launchEden} />
         )}
       </>
     </OnboardingLayout>
