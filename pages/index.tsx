@@ -97,27 +97,33 @@ const Home: NextPage = () => {
   }, [userInfo]);
 
   // helper functions for userInfo
-  const handleWorkspaceChange = useCallback((value: string) => {
-    setUserWorkspace((prev) => ({ ...prev, workspaceName: value }));
-    if (value) {
-      if ("workspaceName" in userWorkspaceErrors) {
-        const errors = { ...userWorkspaceErrors };
-        delete errors.workspaceName;
-        setUserWorkspaceErrors(errors);
+  const handleWorkspaceChange = useCallback(
+    (value: string) => {
+      setUserWorkspace((prev) => ({ ...prev, workspaceName: value }));
+      if (value) {
+        if ("workspaceName" in userWorkspaceErrors) {
+          const errors = { ...userWorkspaceErrors };
+          delete errors.workspaceName;
+          setUserWorkspaceErrors(errors);
+        }
       }
-    }
-  }, []);
+    },
+    [userWorkspaceErrors]
+  );
 
-  const handleUrlChange = useCallback((value: string) => {
-    setUserWorkspace((prev) => ({ ...prev, url: value }));
-    if (value) {
-      if ("url" in userWorkspaceErrors) {
-        const errors = { ...userWorkspaceErrors };
-        delete errors.url;
-        setUserWorkspaceErrors(errors);
+  const handleUrlChange = useCallback(
+    (value: string) => {
+      setUserWorkspace((prev) => ({ ...prev, url: value }));
+      if (value) {
+        if ("url" in userWorkspaceErrors) {
+          const errors = { ...userWorkspaceErrors };
+          delete errors.url;
+          setUserWorkspaceErrors(errors);
+        }
       }
-    }
-  }, []);
+    },
+    [userWorkspaceErrors]
+  );
 
   const handleWorkspaceSubmit = useCallback(() => {
     const errors = checkForErrorsInForm2();
