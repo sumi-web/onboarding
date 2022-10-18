@@ -19,6 +19,8 @@ export interface UserWorkspace {
   url: string;
 }
 
+export type EdenForType = "me" | "team";
+
 const Home: NextPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     userName: "",
@@ -30,7 +32,10 @@ const Home: NextPage = () => {
     url: "",
   });
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [selectWorkspaceFor, setSelectedWorkspaceFor] =
+    useState<EdenForType>("me");
+
+  const [currentStep, setCurrentStep] = useState(2);
 
   console.log("check value", userInfo);
 
@@ -49,6 +54,7 @@ const Home: NextPage = () => {
     },
   ]);
 
+  // helper functions for userInfo
   const handleFullNameChange = useCallback((value: string) => {
     setUserInfo((prev) => ({ ...prev, fullName: value }));
   }, []);
@@ -57,6 +63,12 @@ const Home: NextPage = () => {
     setUserInfo((prev) => ({ ...prev, userName: value }));
   }, []);
 
+  const handleUserInfoFormSubmit = useCallback(() => {
+    console.log("handle final submit");
+    setCurrentStep((prev) => prev + 1);
+  }, []);
+
+  // helper functions for userInfo
   const handleWorkspaceChange = useCallback((value: string) => {
     setUserWorkspace((prev) => ({ ...prev, workspaceName: value }));
   }, []);
@@ -69,9 +81,9 @@ const Home: NextPage = () => {
     setCurrentStep((prev) => prev + 1);
   }, []);
 
-  const handleUserInfoFormSubmit = useCallback(() => {
-    console.log("handle final submit");
-    setCurrentStep((prev) => prev + 1);
+  // helper functions for eden for
+  const handleWorkspaceForChange = useCallback((value: EdenForType) => {
+    setSelectedWorkspaceFor(value);
   }, []);
 
   const checkForErrorsInForm1 = () => {};
@@ -100,7 +112,10 @@ const Home: NextPage = () => {
             onSubmit={handleWorkspaceSubmit}
           />
         ) : currentStep === 2 ? (
-          <EdenFor />
+          <EdenFor
+            selectWorkspaceFor={selectWorkspaceFor}
+            onWorkspaceForChange={handleWorkspaceForChange}
+          />
         ) : (
           currentStep === 3 && <FinalOnboarding />
         )}

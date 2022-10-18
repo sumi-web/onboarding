@@ -32,7 +32,7 @@ const UserInfo = ({
         </Text>
       </Box>
 
-      <Stack maxW={"350px"} width="100%" spacing={4}>
+      <Stack maxW={"350px"} width="100%" spacing={5}>
         <CustomInput
           value={data.fullName}
           labelText="Full Name"
