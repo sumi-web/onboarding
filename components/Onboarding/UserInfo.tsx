@@ -11,25 +11,14 @@ interface Props {
   onSubmit(): void;
 }
 
-const UserInfo = ({
-  data,
-  errors,
-  onChangeFullNameChange,
-  onUserNameChange,
-  onSubmit,
-}: Props) => {
+const UserInfo = ({ data, errors, onChangeFullNameChange, onUserNameChange, onSubmit }: Props) => {
   return (
     <>
-      <Box mb={"10"}>
-        <Heading fontSize={"2xl"} lineHeight={"taller"}>
+      <Box mb={{ base: "6", md: "10" }}>
+        <Heading fontSize={"2xl"} lineHeight={"short"}>
           Welcome! First things first...
         </Heading>
-        <Text
-          fontSize="sm"
-          color={"gray.500"}
-          fontWeight="bold"
-          textAlign={"center"}
-        >
+        <Text fontSize="sm" color={"gray.500"} fontWeight="bold" textAlign={"center"}>
           You can always change them later.
         </Text>
       </Box>

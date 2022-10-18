@@ -201,7 +201,7 @@ const Home: NextPage = () => {
   return (
     <OnboardingLayout>
       <>
-        <Flex align={"flex-end"} gap="8px" mb={"60px"}>
+        <Flex align={"flex-end"} gap="8px" mb={{ base: "40px", md: "60px" }}>
           <Image src="/images/logo.svg" alt="" height={40} width={40} /> <Heading fontSize={"2xl"}>Eden</Heading>
         </Flex>
         {/* show steps here */}

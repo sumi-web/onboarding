@@ -14,8 +14,8 @@ interface Props {
 const UserWorkspace = ({ data, errors, onWorkSpaceChange, onUrlChange, onSubmit }: Props) => {
   return (
     <>
-      <Box mb={"10"}>
-        <Heading fontSize={"2xl"} lineHeight={"taller"}>
+      <Box mb={{ base: "6", md: "10" }}>
+        <Heading fontSize={"2xl"} lineHeight={"short"}>
           Let&apos;s set up a home for all your work
         </Heading>
         <Text fontSize="sm" color={"gray.500"} fontWeight="bold" textAlign={"center"}>

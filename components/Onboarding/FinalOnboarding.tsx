@@ -24,15 +24,10 @@ const FinalOnboarding = ({ userName, launchEden }: Props) => {
         <FaCheck />
       </Box>
       <Box mb={"10"}>
-        <Heading fontSize={"2xl"} lineHeight={"taller"} textAlign="center">
+        <Heading fontSize={"2xl"} lineHeight={"short"} textAlign="center">
           Congratulations, {userName}!
         </Heading>
-        <Text
-          fontSize="sm"
-          color={"gray.500"}
-          fontWeight="bold"
-          textAlign={"center"}
-        >
+        <Text fontSize="sm" color={"gray.500"} fontWeight="bold" textAlign={"center"}>
           You have completed onboarding, you can start using the Eden!.
         </Text>
       </Box>

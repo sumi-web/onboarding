@@ -7,15 +7,14 @@ interface Props {
 
 const Stepper = ({ currentStep, steps }: Props) => {
   return (
-    <div className="stepper">
+    <div className={"stepper " + `S${currentStep}`}>
       <Box>
-        <Flex gap={"60px"} position="relative">
+        <Flex gap={{ base: "45px", sm: "60px" }} position="relative">
           {steps.map((step, i) => {
             const showActiveCircle = currentStep === i || currentStep > i ? true : false;
 
             return (
               <Box
-                className={"circle " + (currentStep === i ? "active" : "")}
                 key={i}
                 width={35}
                 height={35}

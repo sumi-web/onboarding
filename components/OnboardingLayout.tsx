@@ -8,12 +8,7 @@ interface Props {
 const OnboardingLayout = ({ children }: Props) => {
   return (
     <Container maxW={"500px"} minHeight="100vh">
-      <Flex
-        direction={"column"}
-        justify="center"
-        align={"center"}
-        height={"100vh"}
-      >
+      <Flex direction={"column"} justify="center" align={"center"} minHeight={"100vh"}>
         {children}
       </Flex>
     </Container>

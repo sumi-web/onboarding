@@ -8,28 +8,19 @@ interface Props {
   onSubmit(): void;
 }
 
-const EdenFor = ({
-  selectWorkspaceFor,
-  onWorkspaceForChange,
-  onSubmit,
-}: Props) => {
+const EdenFor = ({ selectWorkspaceFor, onWorkspaceForChange, onSubmit }: Props) => {
   return (
     <>
-      <Box mb={"10"}>
-        <Heading fontSize={"2xl"} lineHeight={"taller"}>
+      <Box mb={{ base: "6", md: "10" }}>
+        <Heading fontSize={"2xl"} lineHeight={"short"}>
           How are you planning yo use Eden?
         </Heading>
-        <Text
-          fontSize="sm"
-          color={"gray.500"}
-          fontWeight="bold"
-          textAlign={"center"}
-        >
+        <Text fontSize="sm" color={"gray.500"} fontWeight="bold" textAlign={"center"}>
           We&apos;ll streamline your setup experience accordingly.
         </Text>
       </Box>
       <Stack maxW={"350px"} width="100%" spacing={5}>
-        <Flex justifyContent={"space-between"}>
+        <Flex justifyContent={"space-between"} gap={{ base: "10px", md: "30px" }}>
           <Box
             border={"1px"}
             padding="4"
